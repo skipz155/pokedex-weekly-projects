@@ -1,4 +1,5 @@
 const pokeContainer = document.querySelector(".pokemon-container");
+document.getElementById("search-input").addEventListener("keyup", search);
 const pokeNumber = 15;
 
 // Pobieram pojedynczego stworka z api
@@ -7,6 +8,7 @@ const getPokemons = async function (id) {
 	const result = await fetch(url);
 	const pokemon = await result.json();
 	createPokeCard(pokemon);
+	return pokemon;
 };
 
 // wykorzystuje funkcję getPokemons do pobrania wybranej liczby stworków (i)
@@ -22,6 +24,7 @@ fetchPokemons();
 function createPokeCard(pokemon) {
 	const pokemonEl = document.createElement("div");
 	pokemonEl.classList.add("pokemon");
+	pokemonEl.classList.add(`${pokemon.id}`);
 
 	//nazwa pokemona z dużej litery
 	const pokeName = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
@@ -45,4 +48,24 @@ function createPokeCard(pokemon) {
 	pokemonEl.innerHTML = pokeInnerHTML;
 
 	pokeContainer.appendChild(pokemonEl);
+}
+
+async function search() {
+	const value = document.getElementById("search-input").value;
+	if (value.length > 0) {
+		const pokemon = await getPokemons(value);
+		const allpokemons = document.getElementsByClassName("pokemon");
+		const pokeEl = document.getElementsByClassName(pokemon.id);
+		console.log(value.length);
+
+		for (i = 0; i < allpokemons.length; i++) {
+			if (i == value - 1) {
+				allpokemons[i].style.display = "";
+			} else {
+				allpokemons[i].style.display = "none";
+			}
+		}
+	} else {
+		//TODO: bring display back
+	}
 }
