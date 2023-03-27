@@ -3,8 +3,8 @@
 
 ## User Stories
 
-    User can search by pokemon's name.
-    User can see pokemon's type, sprite, ability, and description.
+    User can search by pokemon's name and ID (in real time) (done).
+    User can see pokemon's type (done), sprite (done), ability, and description.
 
 ## Bonus features
 
