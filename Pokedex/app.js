@@ -1,6 +1,6 @@
 const pokeContainer = document.querySelector(".pokemon-container");
-document.getElementById("search-input").addEventListener("keyup", search);
-const pokeNumber = 15;
+const SearchElement = document.getElementById("search-input");
+const pokeNumber = 151;
 
 // Pobieram pojedynczego stworka z api
 const getPokemons = async function (id) {
@@ -16,6 +16,7 @@ const fetchPokemons = async function () {
 	for (let i = 1; i <= pokeNumber; i++) {
 		await getPokemons(i);
 	}
+	createSearchFilter();
 };
 
 fetchPokemons();
@@ -23,12 +24,14 @@ fetchPokemons();
 // tworzę elementy HTMLa dla karty pod stworki
 function createPokeCard(pokemon) {
 	const pokemonEl = document.createElement("div");
+	const pokeID = pokemon.id.toString().padStart(3, "0"); //#001 ...
 	pokemonEl.classList.add("pokemon");
-	pokemonEl.classList.add(`${pokemon.id}`);
+	pokemonEl.classList.add(`${pokeID}`);
 
 	//nazwa pokemona z dużej litery
 	const pokeName = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
 	const pokeSprite = pokemon.sprites.front_default;
+	pokemonEl.setAttribute("id", pokeName);
 
 	//mapowanie - po typach -- niektóre mają więcej niż jeden typ
 	const pokeTypes = pokemon.types.map((element) => element.type.name);
@@ -39,7 +42,7 @@ function createPokeCard(pokemon) {
         <img src="${pokeSprite}"/>
     </div>
     <div class="pokeInfo-container">
-        <span class="poke-id">#${pokemon.id.toString().padStart(3, "0")}</span>
+        <span class="poke-id">#${pokeID}</span>
         <p class="poke-name">${pokeName}</p>
         <p class="poke-type">Type: ${pokeTypes}</p>
     </div>
@@ -50,22 +53,19 @@ function createPokeCard(pokemon) {
 	pokeContainer.appendChild(pokemonEl);
 }
 
-async function search() {
-	const value = document.getElementById("search-input").value;
-	if (value.length > 0) {
-		const pokemon = await getPokemons(value);
-		const allpokemons = document.getElementsByClassName("pokemon");
-		const pokeEl = document.getElementsByClassName(pokemon.id);
-		console.log(value.length);
-
-		for (i = 0; i < allpokemons.length; i++) {
-			if (i == value - 1) {
-				allpokemons[i].style.display = "";
+//wyszukiwarka po nazwie -- ustawionej jako id elementu + po ID - numerze pokemona
+const createSearchFilter = function () {
+	const cards = document.querySelectorAll(".pokemon");
+	SearchElement.addEventListener("keyup", (event) => {
+		const val = event.target.value.toLowerCase();
+		cards.forEach((card) => {
+			if (card.id.toLowerCase().includes(val)) {
+				card.style.display = "";
+			} else if (card.className.includes(val)) {
+				card.style.display = "";
 			} else {
-				allpokemons[i].style.display = "none";
+				card.style.display = "none";
 			}
-		}
-	} else {
-		//TODO: bring display back
-	}
-}
+		});
+	});
+};
