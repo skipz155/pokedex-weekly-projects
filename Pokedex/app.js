@@ -7,7 +7,29 @@ const getPokemons = async function (id) {
 	const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
 	const result = await fetch(url);
 	const pokemon = await result.json();
-	createPokeCard(pokemon);
+
+	let characteristicCalc = id % 31;
+
+	if (id % 31 == 0) characteristicCalc += 1;
+
+	const urlC = `https://pokeapi.co/api/v2/characteristic/${characteristicCalc}`;
+
+	const resultC = await fetch(urlC, { method: "HEAD" })
+		.then((response) => {
+			if (response.ok) {
+				return fetch(urlC);
+			} else if (response.status === 404) {
+				return fetch(`https://pokeapi.co/api/v2/characteristic/1`);
+			} else {
+				return "error";
+			}
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+	const characteristic = await resultC.json();
+
+	createPokeCard(pokemon, characteristic);
 	return pokemon;
 };
 
@@ -22,7 +44,7 @@ const fetchPokemons = async function () {
 fetchPokemons();
 
 // tworzę elementy HTMLa dla karty pod stworki
-function createPokeCard(pokemon) {
+function createPokeCard(pokemon, characteristic) {
 	const pokemonEl = document.createElement("div");
 	const pokeID = pokemon.id.toString().padStart(3, "0"); //#001 ...
 	pokemonEl.classList.add("pokemon");
@@ -35,6 +57,11 @@ function createPokeCard(pokemon) {
 
 	//mapowanie - po typach -- niektóre mają więcej niż jeden typ
 	const pokeTypes = pokemon.types.map((element) => element.type.name);
+	const pokeAbilities = pokemon.abilities.map(
+		(element) => element.ability.name
+	);
+
+	const pokeDescriptions = characteristic.descriptions[7].description || "none"; //7 desc to angielski
 
 	const pokeInnerHTML = `
     
@@ -45,6 +72,8 @@ function createPokeCard(pokemon) {
         <span class="poke-id">#${pokeID}</span>
         <p class="poke-name">${pokeName}</p>
         <p class="poke-type">Type: ${pokeTypes}</p>
+		<p class="poke-ability" style="display:none" >Abilities: ${pokeAbilities} </p>
+		<p class="poke-description" style="display:none" >Description: ${pokeDescriptions} </p>
     </div>
     `;
 
@@ -68,4 +97,26 @@ const createSearchFilter = function () {
 			}
 		});
 	});
+};
+
+function detailedPokeCard() {
+	//const pokemonCard = document.getElementById(`${pokemon.id}`);
+	document.addEventListener("click", (event) => {
+		//console.log(event.target.closest(".pokemon")); //ultra przydatne - wybiera najbliższego diva do klikniętego elementu
+		const parent = event.target.closest(".pokemon");
+		console.log(parent.id);
+		const nodes = parent.childNodes[3].childNodes;
+		console.log(nodes);
+		toggleDisplay(nodes[7]);
+		toggleDisplay(nodes[9]);
+	});
+}
+detailedPokeCard();
+
+const toggleDisplay = function (x) {
+	if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
 };
