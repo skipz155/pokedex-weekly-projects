@@ -8,6 +8,6 @@
 
 ## Bonus features
 
-    User can see pokemon's stats with different bars.
+    User can see pokemon's stats with different bars. (done)
     User can see pokemon's moveset.
     User can see (any other information you want).
