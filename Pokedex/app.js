@@ -3,7 +3,7 @@ const pokeContainer = document.querySelector(".pokemon-container");
 const SearchElement = document.getElementById("search-input");
 const loader = document.querySelector(".loader");
 const loaderBackground = document.querySelector(".loader-background");
-const pokeNumber = 15;
+const pokeNumber = 151;
 
 const toggleDisplay = async function (x) {
 	if (x.style.display === "none") {
@@ -85,7 +85,7 @@ async function createPokeCard(pokemon, characteristic) {
 		pokeStatsAll.push({ pokeStatsName: pokeStatsName.get("name") });
 		pokeStatsAll.push({ pokeStats: pokeStats.get("base_stat") });
 	}
-	console.log(pokeStatsAll);
+	//console.log(pokeStatsAll);
 
 	const pokeDescriptions = characteristic.descriptions[7].description || "none"; //7 desc to angielski
 
@@ -183,9 +183,9 @@ async function detailedPokeCard() {
 		//console.log(event.target.closest(".pokemon")); //ultra przydatne - wybiera najbliższego diva do klikniętego elementu
 		if (event.target.closest(".pokemon") != null) {
 			const parent = event.target.closest(".pokemon");
-			console.log(parent.id);
+			//console.log(parent.id);
 			const nodes = parent.childNodes[3].childNodes;
-			console.log(nodes);
+			//console.log(nodes);
 			toggleDisplay(nodes[7]);
 			toggleDisplay(nodes[9]);
 			toggleDisplay(nodes[11]);
