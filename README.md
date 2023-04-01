@@ -1,4 +1,5 @@
 # Pokedex
+
     An application where you can search and see information about every pokemon. (pokemon API used)
 
 ## User Stories
@@ -11,3 +12,9 @@
     User can see pokemon's stats with different bars. (done)
     User can see pokemon's moveset.
     User can see (any other information you want).
+
+## Tech-Stack
+
+    Javaspript/HTML/SCSS
+
+    Extension to convert SCSS into CSS - Watch SASS
