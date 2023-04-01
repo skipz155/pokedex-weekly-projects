@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	<body>
+		<div class="loader-background"></div>
 		<nav>
 			<h1>POKEDEX</h1>
 			<input
@@ -18,7 +19,16 @@
 			/>
 		</nav>
 
-		<div class="pokemon-container"></div>
+		<section class="main-section">
+			<div class="loader">
+				<span class="loader-buffer">
+					<span class="loader-inner"></span>
+				</span>
+				<h2>Catching pokemons...</h2>
+			</div>
+			<div class="pokemon-container"></div>
+		</section>
+
 		<script src="app.js"></script>
 	</body>
 </html>

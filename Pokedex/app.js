@@ -1,6 +1,17 @@
 const pokeContainer = document.querySelector(".pokemon-container");
+
 const SearchElement = document.getElementById("search-input");
+const loader = document.querySelector(".loader");
+const loaderBackground = document.querySelector(".loader-background");
 const pokeNumber = 151;
+
+const toggleDisplay = async function (x) {
+	if (x.style.display === "none") {
+		x.style.display = "";
+	} else {
+		x.style.display = "none";
+	}
+};
 
 // Pobieram pojedynczego stworka z api
 const getPokemons = async function (id) {
@@ -29,22 +40,26 @@ const getPokemons = async function (id) {
 		});
 	const characteristic = await resultC.json();
 
-	createPokeCard(pokemon, characteristic);
+	await createPokeCard(pokemon, characteristic);
 	return pokemon;
 };
 
 // wykorzystuje funkcję getPokemons do pobrania wybranej liczby stworków (i)
 const fetchPokemons = async function () {
+	toggleDisplay(pokeContainer);
 	for (let i = 1; i <= pokeNumber; i++) {
 		await getPokemons(i);
 	}
+	toggleDisplay(pokeContainer);
+	toggleDisplay(loader);
+	toggleDisplay(loaderBackground);
 	createSearchFilter();
 };
 
 fetchPokemons();
 
 // tworzę elementy HTMLa dla karty pod stworki
-function createPokeCard(pokemon, characteristic) {
+async function createPokeCard(pokemon, characteristic) {
 	const pokemonEl = document.createElement("div");
 	const pokeID = pokemon.id.toString().padStart(3, "0"); //#001 ...
 	pokemonEl.classList.add("pokemon");
@@ -83,7 +98,7 @@ function createPokeCard(pokemon, characteristic) {
 }
 
 //wyszukiwarka po nazwie -- ustawionej jako id elementu + po ID - numerze pokemona
-const createSearchFilter = function () {
+const createSearchFilter = async function () {
 	const cards = document.querySelectorAll(".pokemon");
 	SearchElement.addEventListener("keyup", (event) => {
 		const val = event.target.value.toLowerCase();
@@ -99,24 +114,18 @@ const createSearchFilter = function () {
 	});
 };
 
-function detailedPokeCard() {
+async function detailedPokeCard() {
 	//const pokemonCard = document.getElementById(`${pokemon.id}`);
 	document.addEventListener("click", (event) => {
 		//console.log(event.target.closest(".pokemon")); //ultra przydatne - wybiera najbliższego diva do klikniętego elementu
-		const parent = event.target.closest(".pokemon");
-		console.log(parent.id);
-		const nodes = parent.childNodes[3].childNodes;
-		console.log(nodes);
-		toggleDisplay(nodes[7]);
-		toggleDisplay(nodes[9]);
+		if (event.target.closest(".pokemon") != null) {
+			const parent = event.target.closest(".pokemon");
+			console.log(parent.id);
+			const nodes = parent.childNodes[3].childNodes;
+			console.log(nodes);
+			toggleDisplay(nodes[7]);
+			toggleDisplay(nodes[9]);
+		}
 	});
 }
 detailedPokeCard();
-
-const toggleDisplay = function (x) {
-	if (x.style.display === "none") {
-		x.style.display = "block";
-	} else {
-		x.style.display = "none";
-	}
-};

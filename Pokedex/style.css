@@ -39,7 +39,16 @@ nav #search-input {
   padding-left: 1em;
 }
 
-.pokemon-container {
+.loader-background {
+  display: block;
+  position: absolute;
+  background: rgba(14, 14, 14, 0.568627451);
+  width: 100%;
+  height: 200%;
+  z-index: 10;
+}
+
+.main-section .pokemon-container {
   display: flex;
   flex-wrap: wrap;
   align-items: space-between;
@@ -47,8 +56,7 @@ nav #search-input {
   margin: 0 auto;
   max-width: 1200px;
 }
-
-.pokemon {
+.main-section .pokemon {
   display: flex;
   align-items: center;
   background-color: #f8f0f0;
@@ -61,11 +69,11 @@ nav #search-input {
   border: 5px solid white;
   cursor: pointer;
 }
-.pokemon:hover {
+.main-section .pokemon:hover {
   box-shadow: 3px 3px 7px #303030;
   transform: translate(-1px, -2px);
 }
-.pokemon .pokeImg-container {
+.main-section .pokemon .pokeImg-container {
   display: flex;
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
@@ -73,11 +81,11 @@ nav #search-input {
   width: 120px;
   height: 120px;
 }
-.pokemon .pokeImg-container .img {
+.main-section .pokemon .pokeImg-container .img {
   max-width: 90%;
   align-self: center;
 }
-.pokemon .pokeInfo-container {
+.main-section .pokemon .pokeInfo-container {
   margin: 10px;
   padding: 0px 12px 12px 12px;
   border-radius: 14px;
@@ -85,7 +93,7 @@ nav #search-input {
   color: #fff;
   width: 200px;
 }
-.pokemon .pokeInfo-container .poke-id {
+.main-section .pokemon .pokeInfo-container .poke-id {
   display: inline-block;
   color: #4b4c4c;
   background-color: white;
@@ -94,8 +102,72 @@ nav #search-input {
   font-weight: bold;
   transform: translateY(-12px);
 }
-.pokemon .pokeInfo-container .poke-name {
+.main-section .pokemon .pokeInfo-container .poke-name {
   font-weight: bold;
   letter-spacing: 1px;
   margin: 4px;
+}
+.main-section .loader {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  margin-left: -10px;
+  /* -1/2 width */
+  margin-top: -10px;
+  /* -1/2 height */
+  z-index: 11;
+}
+.main-section .loader h2 {
+  font-size: 1.4em;
+  transform: translateX(-84px);
+  color: red;
+  text-shadow: -1px 0 rgb(255, 255, 255), 0 1px rgb(255, 255, 255), 1px 0 rgb(255, 255, 255), 0 -1px rgb(255, 255, 255);
+}
+.main-section .loader .loader-buffer {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #fff;
+  animation: loader-buffer 2s infinite ease;
+}
+.main-section .loader .loader-inner {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  animation: loader-inner 2s infinite ease-in;
+}
+@keyframes loader-buffer {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-inner {
+  0% {
+    height: 0%;
+  }
+  25% {
+    height: 0%;
+  }
+  50% {
+    height: 100%;
+  }
+  75% {
+    height: 100%;
+  }
+  100% {
+    height: 0%;
+  }
 }/*# sourceMappingURL=style.css.map */
