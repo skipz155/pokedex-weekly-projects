@@ -3,7 +3,7 @@ const pokeContainer = document.querySelector(".pokemon-container");
 const SearchElement = document.getElementById("search-input");
 const loader = document.querySelector(".loader");
 const loaderBackground = document.querySelector(".loader-background");
-const pokeNumber = 151;
+const pokeNumber = 15;
 
 const toggleDisplay = async function (x) {
 	if (x.style.display === "none") {
@@ -76,6 +76,17 @@ async function createPokeCard(pokemon, characteristic) {
 		(element) => element.ability.name
 	);
 
+	const pokeStatsAll = [{}];
+	for (let i = 0; i < 6; i++) {
+		const pokeStats = new Map(Object.entries(pokemon.stats[i]));
+
+		const pokeStatsName = new Map(Object.entries(pokemon.stats[i].stat));
+
+		pokeStatsAll.push({ pokeStatsName: pokeStatsName.get("name") });
+		pokeStatsAll.push({ pokeStats: pokeStats.get("base_stat") });
+	}
+	console.log(pokeStatsAll);
+
 	const pokeDescriptions = characteristic.descriptions[7].description || "none"; //7 desc to angielski
 
 	const pokeInnerHTML = `
@@ -89,6 +100,58 @@ async function createPokeCard(pokemon, characteristic) {
         <p class="poke-type">Type: ${pokeTypes}</p>
 		<p class="poke-ability" style="display:none" >Abilities: ${pokeAbilities} </p>
 		<p class="poke-description" style="display:none" >Description: ${pokeDescriptions} </p>
+		<table class="poke-stats"  style="display:none" >
+			<tr>
+				<td>
+				${JSON.stringify(pokeStatsAll[1].pokeStatsName)}
+				</td>
+				<td>
+				${JSON.stringify(pokeStatsAll[2].pokeStats)}
+				</td>
+			</tr>
+			<tr>
+				<td>
+				${JSON.stringify(pokeStatsAll[3].pokeStatsName)}
+				</td>
+				<td>
+				${JSON.stringify(pokeStatsAll[4].pokeStats)}
+				</td>
+			</tr>
+			<tr>
+				<td>
+				${JSON.stringify(pokeStatsAll[5].pokeStatsName)}
+				</td>
+				<td>
+				${JSON.stringify(pokeStatsAll[6].pokeStats)}
+				</td>
+			</tr>
+			<tr>
+				<td>
+				${JSON.stringify(pokeStatsAll[7].pokeStatsName)}
+				</td>
+				<td>
+				${JSON.stringify(pokeStatsAll[8].pokeStats)}
+				</td>
+			</tr>
+			<tr>
+				<td>
+				${JSON.stringify(pokeStatsAll[9].pokeStatsName)}
+				</td>
+				<td>
+				${JSON.stringify(pokeStatsAll[10].pokeStats)}
+				</td>
+			</tr>
+			<tr>
+				<td>
+				${JSON.stringify(pokeStatsAll[11].pokeStatsName)}
+				</td>
+				<td>
+				${JSON.stringify(pokeStatsAll[12].pokeStats)}
+				</td>
+			</tr>
+		
+	</table>
+		
     </div>
     `;
 
@@ -125,6 +188,7 @@ async function detailedPokeCard() {
 			console.log(nodes);
 			toggleDisplay(nodes[7]);
 			toggleDisplay(nodes[9]);
+			toggleDisplay(nodes[11]);
 		}
 	});
 }
