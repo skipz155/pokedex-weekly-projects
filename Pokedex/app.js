@@ -13,6 +13,16 @@ const toggleDisplay = async function (x) {
 	}
 };
 
+const toggleImgSize = async function (x) {
+	if (x.style.width === "250px") {
+		x.style.width = "";
+		x.style.height = "";
+	} else {
+		x.style.width = "250px";
+		x.style.height = "250px";
+	}
+};
+
 // Pobieram pojedynczego stworka z api
 const getPokemons = async function (id) {
 	const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
@@ -178,17 +188,17 @@ const createSearchFilter = async function () {
 };
 
 async function detailedPokeCard() {
-	//const pokemonCard = document.getElementById(`${pokemon.id}`);
 	document.addEventListener("click", (event) => {
 		//console.log(event.target.closest(".pokemon")); //ultra przydatne - wybiera najbliższego diva do klikniętego elementu
 		if (event.target.closest(".pokemon") != null) {
 			const parent = event.target.closest(".pokemon");
-			//console.log(parent.id);
+			const pokeImg = parent.childNodes[1];
 			const nodes = parent.childNodes[3].childNodes;
-			//console.log(nodes);
 			toggleDisplay(nodes[7]);
 			toggleDisplay(nodes[9]);
 			toggleDisplay(nodes[11]);
+
+			toggleImgSize(pokeImg);
 		}
 	});
 }
