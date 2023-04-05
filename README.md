@@ -3,6 +3,7 @@
     An application where you can search and see information about every pokemon. (pokemon API used)
     Live preview:
  - [Online Preview](https://642b2fdeeb9b5d2631d5d2dd--peaceful-gumdrop-4a24c1.netlify.app/) - deployed on netlify
+    (Loading page can take up to 15-30sec)
     
 ## User Stories
 
